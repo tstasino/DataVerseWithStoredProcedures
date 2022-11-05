@@ -46,12 +46,12 @@ namespace DataVerse.Models
         [Display(Name = "Cell Phone")]
         public Nullable<long> CellPhone { get; set; }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            if (string.IsNullOrEmpty(HomePhone.ToString()) && string.IsNullOrEmpty(WorkPhone.ToString()) 
-                                     && string.IsNullOrEmpty(CellPhone.ToString()) )
-                yield return new ValidationResult("Must provide value for either Home,Work or Cell Phone.", new [] { "HomePhone", "WorkPhone","CellPhone" });
-        }
+        //public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        //{
+        //    if (string.IsNullOrEmpty(HomePhone.ToString()) && string.IsNullOrEmpty(WorkPhone.ToString()) 
+        //                             && string.IsNullOrEmpty(CellPhone.ToString()) )
+        //        yield return new ValidationResult("Must provide value for either Home,Work or Cell Phone.", new [] { "HomePhone", "WorkPhone","CellPhone" });
+        //}
         //[RegularExpression("True|true|true", ErrorMessage = "At least one field must be given a value")]
         //public bool one => HomePhone != null || WorkPhone != null || CellPhone != null;
 

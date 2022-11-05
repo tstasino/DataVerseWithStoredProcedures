@@ -10,15 +10,13 @@
 namespace DataVerse
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Phone
+    public partial class sp_helpdiagrams_Result
     {
-        public int Customer_id { get; set; }
-        public Nullable<long> HomePhone { get; set; }
-        public Nullable<long> WorkPhone { get; set; }
-        public Nullable<long> CellPhone { get; set; }
-    
-        public virtual Customer Customer { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

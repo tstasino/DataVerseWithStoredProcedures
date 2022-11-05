@@ -1,4 +1,4 @@
-﻿@model DataVerse.Customer
+﻿@model DataVerse.Models.CustomerViewModel
 
 
 <div class="modal fade" id="editCustomerModal-@Model.id" aria-labelledby="editCustomerLabel" aria-hidden="true">
@@ -30,16 +30,16 @@
                         @Html.TextBoxFor(m => m.email, new { @class = "form-control" })
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.Phone.HomePhone)
-                        @Html.TextBoxFor(m => m.Phone.HomePhone, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.HomePhone)
+                        @Html.TextBoxFor(m => m.HomePhone, new { @class = "form-control" })
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.Phone.WorkPhone)
-                        @Html.TextBoxFor(m => m.Phone.WorkPhone, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.WorkPhone)
+                        @Html.TextBoxFor(m => m.WorkPhone, new { @class = "form-control" })
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.Phone.CellPhone)
-                        @Html.TextBoxFor(m => m.Phone.CellPhone, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.CellPhone)
+                        @Html.TextBoxFor(m => m.CellPhone, new { @class = "form-control" })
                     </div>
 
                 </div>

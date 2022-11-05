@@ -6,7 +6,6 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using System.ComponentModel.DataAnnotations;
 
 namespace DataVerse
 {
@@ -15,29 +14,9 @@ namespace DataVerse
     
     public partial class Customer
     {
-        [Display(Name = "First Name")]
-        [Required(ErrorMessage = "First Name is required")]
-        [StringLength(50, ErrorMessage = "Name cannot exceeed 50 characters")]
-        //[RegularExpression("^[a-zA-Z ]*$")]
-        [RegularExpression(@"^\D*$", ErrorMessage = "No numbers allowed in First Name.")]
         public string FirstName { get; set; }
-        
-        [Display(Name = "Last Name")]
-        [Required(ErrorMessage = "Last Name is required")]
-        [StringLength(50, ErrorMessage = "Name cannot exceeed 50 characters")]
-        //[RegularExpression("^[a-zA-Z ]*$")]
-        [RegularExpression(@"^\D*$", ErrorMessage = "No numbers allowed in Last Name.")]
         public string LastName { get; set; }
-
-
-        [Required(ErrorMessage = "Address is required")]
         public string Address { get; set; }
-        
-        [Required(ErrorMessage = "Email is Required")]
-        [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
-                             @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
-                             @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
-                             ErrorMessage = "Email is not valid")]
         public string email { get; set; }
         public int id { get; set; }
     
