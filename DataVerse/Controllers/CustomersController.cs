@@ -77,42 +77,52 @@ namespace DataVerse.Controllers
   
         }
 
-        //// GET: Customers/Edit/5
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Customer customer = db.Customers.Where(c => c.id == id).FirstOrDefault();
+        // GET: Customers/Edit/5
+        public ActionResult Edit(int id)
+        {
+            var customer = _customerDAL.GetCustomerByID(id).FirstOrDefault();
+            
+            if(customer == null)
+            {
+                TempData["InfoMessage"] = "Customer not available with id " + id;
+                return RedirectToAction("Index");
+            }
+            return View(customer);
 
-        //    if (customer == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    Phone phone = db.Phones.Where(c => c.Customer_id == id).FirstOrDefault();
+        }
 
-        //    customer.Phone.Customer_id = phone.Customer_id;
-        //    return PartialView("_editCustomerPartialView", customer);
-        //}
+        // POST: Customers/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        public ActionResult Edit(CustomerViewModel customer)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    bool isUpdated = _customerDAL.UpdateCustomer(customer);
 
-        //// POST: Customers/Edit/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //public ActionResult Edit(Customer customer)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
+                    if (isUpdated)
+                    {
+                        TempData["SuccessMessage"] = "Customer Updated successfully";
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "Customer was not Updated";
+                    }
 
-        //        customer.Phone.Customer_id = customer.id;
-        //        db.Entry(customer).State = EntityState.Modified;
-        //        db.Entry(customer.Phone).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(customer);
-        //}
+
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return View("Index");
+                throw;
+            }
+        }
 
         //// GET: Customers/Delete/5
         //public ActionResult Delete(int? id)

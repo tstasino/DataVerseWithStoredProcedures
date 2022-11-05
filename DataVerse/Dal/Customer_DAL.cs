@@ -84,5 +84,81 @@ namespace DataVerse.Dal
 
             }
         }
+
+
+        //Get Customers by Id
+        public List<CustomerViewModel> GetCustomerByID(int customerId)
+        {
+            List<CustomerViewModel> customerList = new List<CustomerViewModel>();
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            {
+                SqlCommand command = connection.CreateCommand();
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "sp_GetCustomerByID";
+                command.Parameters.AddWithValue("@Id", customerId);
+                SqlDataAdapter sqlDA = new SqlDataAdapter(command);
+                DataTable dtCustomers = new DataTable();
+
+                connection.Open();
+                sqlDA.Fill(dtCustomers);
+                connection.Close();
+
+                foreach (DataRow dr in dtCustomers.Rows)
+                {
+
+                    var tmp = new CustomerViewModel();
+
+                    tmp.id = Convert.ToInt32(dr["Id"]);
+                    tmp.FirstName = dr["FirstName"].ToString();
+                    tmp.LastName = dr["LastName"].ToString();
+                    tmp.Address = dr["Address"].ToString();
+                    tmp.email = dr["email"].ToString();
+                    if (dr["HomePhone"] != DBNull.Value) tmp.HomePhone = Convert.ToInt64(dr["HomePhone"]);
+                    if (dr["WorkPhone"] != DBNull.Value) tmp.WorkPhone = Convert.ToInt64(dr["WorkPhone"]);
+                    if (dr["CellPhone"] != DBNull.Value) tmp.CellPhone = Convert.ToInt64(dr["CellPhone"]);
+
+                    customerList.Add(tmp);
+
+
+                }
+            }
+
+            return customerList;
+        }
+
+        //Update Customer
+        public bool UpdateCustomer(CustomerViewModel customer)
+        {
+            int id = 0;
+            using (SqlConnection connection = new SqlConnection(conString))
+            {
+                SqlCommand command = new SqlCommand("sp_UpdateCustomers", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@Id", customer.id);
+                command.Parameters.AddWithValue("@FirstName", customer.FirstName);
+                command.Parameters.AddWithValue("@LastName", customer.LastName);
+                command.Parameters.AddWithValue("@Address", customer.Address);
+                command.Parameters.AddWithValue("@email", customer.email);
+                command.Parameters.AddWithValue("@HomePhone", customer.HomePhone);
+                command.Parameters.AddWithValue("@WorkPhone", customer.WorkPhone);
+                command.Parameters.AddWithValue("@CellPhone", customer.CellPhone);
+
+                connection.Open();
+                id = command.ExecuteNonQuery();
+                connection.Close();
+                if (id > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+
+            }
+        }
+
     }
 }
