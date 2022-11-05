@@ -1,0 +1,94 @@
+﻿@model DataVerse.Models.CustomerViewModel
+
+
+<div class="modal fade" id="addCustomerModal" aria-labelledby="addCustomerLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="@Url.Action("Create","Customers")" id="customerForm" method="post">
+                <div class="modal-header">
+                    <h2 class="modal-title">Insert new Customer</h2>
+                </div>
+                <span class="alert-danger">
+                    @Html.ValidationSummary()
+                </span>
+                <div class="modal-body">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FirstName)
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LastName)
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Address)
+                        @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.email)
+                        @Html.TextBoxFor(m => m.email, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.HomePhone)
+                        @Html.TextBoxFor(m => m.HomePhone, new { @name = "HomePhone", @id = "HomePhone", @class = "form-control phone-group" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.WorkPhone)
+                        @Html.TextBoxFor(m => m.WorkPhone, new { @name = "WorkPhone", @id = "WorkPhone", @class = "form-control phone-group" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.CellPhone)
+                        @Html.TextBoxFor(m => m.CellPhone, new { @name = "CellPhone", @id = "CellPhone ", @class = "form-control phone-group" })
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" value="validate" class="btn btn-primary" id="btnSubmit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@*<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        jQuery.validator.addMethod("require_from_group", function (value, element, options) {
+            var numberRequired = options[0];
+            var selector = options[1];
+            var fields = $(selector, element.form);
+            var filled_fields = fields.filter(function () {
+                // it's more clear to compare with empty string
+                return $(this).val() != "";
+            });
+            var empty_fields = fields.not(filled_fields);
+            // we will mark only first empty field as invalid
+            if (filled_fields.length < numberRequired && empty_fields[0] == element) {
+                return false;
+            }
+            return true;
+            // {0} below is the 0th item in the options field
+        }, jQuery.format("'Please enter either username/ email address to recover password'/Please fill out at least {0} of these fields."));
+
+        $('#customerForm').validate({ // initialize the plugin
+            groups: {
+                names: "HomePhone WorkPhone CellPhone"
+            },
+            rules: {
+                HomePhone: {
+                    require_from_group: [1, ".phone-group"]
+                },
+                WorkPhone: {
+                    require_from_group: [1, ".phone-group"]
+                },
+                CellPhone: {
+                    require_from_group: [1, ".phone-group"]
+                }
+            }
+        });
+
+
+
+    });
+</script>*@
