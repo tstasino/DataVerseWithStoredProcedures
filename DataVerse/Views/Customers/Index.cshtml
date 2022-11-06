@@ -123,9 +123,18 @@
 @Html.Partial("_CustomerPartialView", new DataVerse.Models.CustomerViewModel());
 
 @section scripts{
-    <script src="~/Scripts/modals.js"></script>
+
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/modals.js"></script>
+    <script>
+        window.setTimeout(function () {
+            $(".alert").fadeTo(500, 0).slideUp(500, function () {
+                $(this).remove();
+            })
+        }, 4000)
+    </script>
+
 }
