@@ -160,5 +160,24 @@ namespace DataVerse.Dal
             }
         }
 
+        public string DeleteCustomer(int id)
+        {
+            string result = "";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            {
+                SqlCommand command = new SqlCommand("sp_DeleteCustomer", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@id", id);
+                command.Parameters.Add("@OutputMessage", SqlDbType.VarChar, 50).Direction= ParameterDirection.Output;
+                connection.Open();
+                command.ExecuteNonQuery();
+                result = command.Parameters["@OutputMessage"].Value.ToString();
+                connection.Close();
+            }
+
+            return result;
+        }
+
     }
 }

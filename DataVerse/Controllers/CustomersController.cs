@@ -124,31 +124,54 @@ namespace DataVerse.Controllers
             }
         }
 
-        //// GET: Customers/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Customer customer = db.Customers.Find(id);
-        //    if (customer == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(customer);
-        //}
+        // GET: Customers/Delete/5
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                var customer = _customerDAL.GetCustomerByID(id).FirstOrDefault();
 
-        //// POST: Customers/Delete/5
-        //[HttpPost]
-        ////[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    Customer customer = db.Customers.Find(id);
-        //    db.Customers.Remove(customer);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
+                if (customer == null)
+                {
+                    TempData["InfoMessage"] = "Customer not available with id " + id;
+                    return RedirectToAction("Index");
+                }
+
+                return View("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return View("Index");
+            }
+            
+        }
+
+        // POST: Customers/Delete/5
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            try
+            {
+                string result = _customerDAL.DeleteCustomer(id);
+                if (result.Contains("Deleted"))
+                {
+                    TempData["SuccessMessage"] = result;
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = result;
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return View("Index");
+                
+            }
+        }
 
         //protected override void Dispose(bool disposing)
         //{
