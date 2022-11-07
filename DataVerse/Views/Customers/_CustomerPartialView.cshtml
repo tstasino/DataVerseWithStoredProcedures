@@ -4,13 +4,15 @@
 <div class="modal fade" id="addCustomerModal" aria-labelledby="addCustomerLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="@Url.Action("Create","Customers")" id="customerForm" method="post">
+            <div class="form-errors" style="background-color:pink"></div>           
+            <form action="@Url.Action("Create","Customers")" id="addCustomerForm" method="post">
                 <div class="modal-header">
                     <h2 class="modal-title">Insert new Customer</h2>
                 </div>
                 <span class="alert-danger">
                     @Html.ValidationSummary()
                 </span>
+                <p id="error"></p>
                 <div class="modal-body">
                     <div class="form-group">
                         @Html.LabelFor(m => m.FirstName)
@@ -30,15 +32,18 @@
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.HomePhone)
-                        @Html.TextBoxFor(m => m.HomePhone, new { @name = "HomePhone", @id = "HomePhone", @class = "form-control phone-group" })
+                        @Html.TextBoxFor(m => m.HomePhone, new { @name = "HomePhone", @id = "HomePhone", @class = "form-control phonegroup" })
+                        @*<input type="text" name="HomePhone" id="HomePhone" class="form-control one-of reqgroup"/>*@
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.WorkPhone)
-                        @Html.TextBoxFor(m => m.WorkPhone, new { @name = "WorkPhone", @id = "WorkPhone", @class = "form-control phone-group" })
+                        @Html.TextBoxFor(m => m.WorkPhone, new { @name = "WorkPhone", @id = "WorkPhone", @class = "form-control phonegroup" })
+                       @* <input type="text" name="WorkPhone" id="WorkPhone" class="form-control one-of reqgroup" />*@
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.CellPhone)
-                        @Html.TextBoxFor(m => m.CellPhone, new { @name = "CellPhone", @id = "CellPhone ", @class = "form-control phone-group" })
+                        @Html.TextBoxFor(m => m.CellPhone, new { @name = "CellPhone", @id = "CellPhone ", @class = "form-control phonegroup" })
+                        @*<input type="text" name="CellPhone" id="CellPhone" class="form-control one-of reqgroup" />*@
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -49,46 +54,85 @@
         </div>
     </div>
 </div>
-@*<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 <script>
-    $(document).ready(function () {
-
-        jQuery.validator.addMethod("require_from_group", function (value, element, options) {
-            var numberRequired = options[0];
-            var selector = options[1];
-            var fields = $(selector, element.form);
-            var filled_fields = fields.filter(function () {
-                // it's more clear to compare with empty string
-                return $(this).val() != "";
-            });
-            var empty_fields = fields.not(filled_fields);
-            // we will mark only first empty field as invalid
-            if (filled_fields.length < numberRequired && empty_fields[0] == element) {
-                return false;
-            }
-            return true;
-            // {0} below is the 0th item in the options field
-        }, jQuery.format("'Please enter either username/ email address to recover password'/Please fill out at least {0} of these fields."));
-
-        $('#customerForm').validate({ // initialize the plugin
+    $(function () {
+        // Initialize form validation on the registration form.
+        // It has the name attribute "registration"
+        $("#test").validate({
+            errorLabelContainer: ".form-errors",
             groups: {
-                names: "HomePhone WorkPhone CellPhone"
+                phone: "HomePhone WorkPhone CellPhone"
             },
+            // Specify validation rules
             rules: {
-                HomePhone: {
+                // The key name on the left side is the name attribute
+                // of an input field. Validation rules are defined
+                // on the right side
+                firstName: "required",
+                mobile_phone: {
                     require_from_group: [1, ".phone-group"]
+                },
+                home_phone: {
+                    require_from_group: [1, ".phone-group"]
+                },
+                work_phone: {
+                    require_from_group: [1, ".phone-group"]
+                },
+                HomePhone: {
+                    require_from_group: [1, ".phonegroup"]
                 },
                 WorkPhone: {
-                    require_from_group: [1, ".phone-group"]
+                    require_from_group: [1, ".phonegroup"]
                 },
                 CellPhone: {
-                    require_from_group: [1, ".phone-group"]
+                    require_from_group: [1, ".phonegroup"]
+                },
+            },
+            // Specify validation error messages
+            messages: {
+                firstName: "Please enter your firstname",
+                mobile_phone: {
+                    require_from_group: "You must either fill home/work/mobile number."
+                },
+                home_phone: {
+                    require_from_group: "You must either fill home/work/mobile number."
+                },
+                work_phone: {
+                    require_from_group: "You must either fill home/work/mobile number."
+                },
+                HomePhone: {
+                    require_from_group: "You must either fill home/work/mobile number."
+                },
+                WorkPhone: {
+                    require_from_group: "You must either fill home/work/mobile number."
+                },
+                CellPhone: {
+                    require_from_group: "You must either fill home/work/mobile number."
+                },
+
+
+
+            },
+            invalidHandler: function (e, validator) {
+                //validator.errorList contains an array of objects, where each object has properties "element" and "message".  element is the actual HTML Input.
+                for (var i = 0; i < validator.errorList.length; i++) {
+                    console.log(validator.errorList[i]);
                 }
+
+                //validator.errorMap is an object mapping input names -> error messages
+                for (var i in validator.errorMap) {
+                    console.log(i, ":", validator.errorMap[i]);
+                }
+            },
+            // Make sure the form is submitted to the destination defined
+            // in the "action" attribute of the form when valid
+            submitHandler: function (form) {
+                form.submit();
             }
         });
-
-
-
     });
-</script>*@
+    
+</script>

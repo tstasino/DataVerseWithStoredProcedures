@@ -16,13 +16,19 @@ namespace DataVerse.Controllers
 {
     public class CustomersController : Controller
     {
-        //private DataVerseEntities db = new DataVerseEntities();
-        Customer_DAL _customerDAL = new Customer_DAL();
+        readonly ICustomer_DAL customer_DAL;
+
+        public CustomersController(ICustomer_DAL repository)
+        {
+            this.customer_DAL = repository;
+        }
+
+        //Customer_DAL _customerDAL = new Customer_DAL();
 
         // GET: Customers
         public ActionResult Index()
         {
-            var customerList = _customerDAL.GetAllCustomers();
+            var customerList = customer_DAL.GetAllCustomers();
             if(customerList.Count  == 0)
             {
                 TempData["InfoMessage"] = "Currently there are no Customers in the Database";
@@ -49,7 +55,7 @@ namespace DataVerse.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    isInserted = _customerDAL.InsertCustomer(customer);
+                    isInserted = customer_DAL.InsertCustomer(customer);
 
                     if (isInserted)
                     {
@@ -80,7 +86,7 @@ namespace DataVerse.Controllers
         // GET: Customers/Edit/5
         public ActionResult Edit(int id)
         {
-            var customer = _customerDAL.GetCustomerByID(id).FirstOrDefault();
+            var customer = customer_DAL.GetCustomerByID(id).FirstOrDefault();
             
             if(customer == null)
             {
@@ -101,7 +107,7 @@ namespace DataVerse.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    bool isUpdated = _customerDAL.UpdateCustomer(customer);
+                    bool isUpdated = customer_DAL.UpdateCustomer(customer);
 
                     if (isUpdated)
                     {
@@ -129,7 +135,7 @@ namespace DataVerse.Controllers
         {
             try
             {
-                var customer = _customerDAL.GetCustomerByID(id).FirstOrDefault();
+                var customer = customer_DAL.GetCustomerByID(id).FirstOrDefault();
 
                 if (customer == null)
                 {
@@ -154,7 +160,7 @@ namespace DataVerse.Controllers
         {
             try
             {
-                string result = _customerDAL.DeleteCustomer(id);
+                string result = customer_DAL.DeleteCustomer(id);
                 if (result.Contains("Deleted"))
                 {
                     TempData["SuccessMessage"] = result;

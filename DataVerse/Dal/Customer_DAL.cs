@@ -9,7 +9,7 @@ using DataVerse.Models;
 
 namespace DataVerse.Dal
 {
-    public class Customer_DAL
+    public class Customer_DAL : ICustomer_DAL
     {
         string conString = ConfigurationManager.ConnectionStrings["DataVerseEntities"].ToString();
 
@@ -18,35 +18,35 @@ namespace DataVerse.Dal
         {
             List<CustomerViewModel> customerList = new List<CustomerViewModel>();
 
-            using(SqlConnection connection=new SqlConnection(conString))
+            using (SqlConnection connection = new SqlConnection(conString))
             {
                 SqlCommand command = connection.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "sp_GetAllCustomers";
                 SqlDataAdapter sqlDA = new SqlDataAdapter(command);
                 DataTable dtCustomers = new DataTable();
-                
+
                 connection.Open();
                 sqlDA.Fill(dtCustomers);
                 connection.Close();
 
-                foreach(DataRow dr in dtCustomers.Rows)
+                foreach (DataRow dr in dtCustomers.Rows)
                 {
-                   
-                        var tmp = new CustomerViewModel();
- 
-                        tmp.id = Convert.ToInt32(dr["id"]);
-                        tmp.FirstName = dr["FirstName"].ToString();
-                        tmp.LastName = dr["LastName"].ToString();
-                        tmp.Address = dr["Address"].ToString();
-                        tmp.email = dr["email"].ToString();
-                        if (dr["HomePhone"] != DBNull.Value)  tmp.HomePhone = Convert.ToInt64(dr["HomePhone"]);
-                        if (dr["WorkPhone"] != DBNull.Value) tmp.WorkPhone = Convert.ToInt64(dr["WorkPhone"]);
-                        if (dr["CellPhone"] != DBNull.Value) tmp.CellPhone = Convert.ToInt64(dr["CellPhone"]);
 
-                        customerList.Add(tmp);                     
-                    
-                    
+                    var tmp = new CustomerViewModel();
+
+                    tmp.id = Convert.ToInt32(dr["id"]);
+                    tmp.FirstName = dr["FirstName"].ToString();
+                    tmp.LastName = dr["LastName"].ToString();
+                    tmp.Address = dr["Address"].ToString();
+                    tmp.email = dr["email"].ToString();
+                    if (dr["HomePhone"] != DBNull.Value) tmp.HomePhone = Convert.ToInt64(dr["HomePhone"]);
+                    if (dr["WorkPhone"] != DBNull.Value) tmp.WorkPhone = Convert.ToInt64(dr["WorkPhone"]);
+                    if (dr["CellPhone"] != DBNull.Value) tmp.CellPhone = Convert.ToInt64(dr["CellPhone"]);
+
+                    customerList.Add(tmp);
+
+
                 }
             }
 
@@ -72,7 +72,7 @@ namespace DataVerse.Dal
                 connection.Open();
                 id = command.ExecuteNonQuery();
                 connection.Close();
-                if(id>0)
+                if (id > 0)
                 {
                     return true;
                 }
@@ -169,7 +169,7 @@ namespace DataVerse.Dal
                 SqlCommand command = new SqlCommand("sp_DeleteCustomer", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@id", id);
-                command.Parameters.Add("@OutputMessage", SqlDbType.VarChar, 50).Direction= ParameterDirection.Output;
+                command.Parameters.Add("@OutputMessage", SqlDbType.VarChar, 50).Direction = ParameterDirection.Output;
                 connection.Open();
                 command.ExecuteNonQuery();
                 result = command.Parameters["@OutputMessage"].Value.ToString();
