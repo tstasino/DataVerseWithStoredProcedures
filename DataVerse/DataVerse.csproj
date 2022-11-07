@@ -171,6 +171,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\CustomerViewModel.cs" />
+    <Compile Include="Models\CustomerVM.cs" />
     <Compile Include="Phone.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

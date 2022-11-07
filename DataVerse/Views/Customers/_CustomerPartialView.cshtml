@@ -1,19 +1,18 @@
-﻿@model DataVerse.Models.CustomerViewModel
+﻿@model DataVerse.Models.CustomerVM
 
 
 <div class="modal fade" id="addCustomerModal" aria-labelledby="addCustomerLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="form-errors" style="background-color:pink"></div>           
+            
             <form action="@Url.Action("Create","Customers")" id="addCustomerForm" method="post">
                 <div class="modal-header">
                     <h2 class="modal-title">Insert new Customer</h2>
                 </div>
-                <span class="alert-danger">
-                    @Html.ValidationSummary()
-                </span>
+
                 <p id="error"></p>
                 <div class="modal-body">
+                    <div class="form-errors" style="color:orangered"></div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.FirstName)
                         @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
@@ -33,17 +32,14 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.HomePhone)
                         @Html.TextBoxFor(m => m.HomePhone, new { @name = "HomePhone", @id = "HomePhone", @class = "form-control phonegroup" })
-                        @*<input type="text" name="HomePhone" id="HomePhone" class="form-control one-of reqgroup"/>*@
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.WorkPhone)
                         @Html.TextBoxFor(m => m.WorkPhone, new { @name = "WorkPhone", @id = "WorkPhone", @class = "form-control phonegroup" })
-                       @* <input type="text" name="WorkPhone" id="WorkPhone" class="form-control one-of reqgroup" />*@
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.CellPhone)
                         @Html.TextBoxFor(m => m.CellPhone, new { @name = "CellPhone", @id = "CellPhone ", @class = "form-control phonegroup" })
-                        @*<input type="text" name="CellPhone" id="CellPhone" class="form-control one-of reqgroup" />*@
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -58,10 +54,10 @@
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 <script>
-    $(function () {
+    $(function () {       
         // Initialize form validation on the registration form.
         // It has the name attribute "registration"
-        $("#test").validate({
+        $("#addCustomerForm").validate({
             errorLabelContainer: ".form-errors",
             groups: {
                 phone: "HomePhone WorkPhone CellPhone"
@@ -71,16 +67,11 @@
                 // The key name on the left side is the name attribute
                 // of an input field. Validation rules are defined
                 // on the right side
-                firstName: "required",
-                mobile_phone: {
-                    require_from_group: [1, ".phone-group"]
-                },
-                home_phone: {
-                    require_from_group: [1, ".phone-group"]
-                },
-                work_phone: {
-                    require_from_group: [1, ".phone-group"]
-                },
+                FirstName: { required: true, lettersonly: true },
+                LastName: { required: true, lettersonly: true },
+                Address: { required: true } ,
+                email: { required: true, email: true },
+
                 HomePhone: {
                     require_from_group: [1, ".phonegroup"]
                 },
@@ -89,20 +80,15 @@
                 },
                 CellPhone: {
                     require_from_group: [1, ".phonegroup"]
-                },
+                }
             },
             // Specify validation error messages
             messages: {
-                firstName: "Please enter your firstname",
-                mobile_phone: {
-                    require_from_group: "You must either fill home/work/mobile number."
-                },
-                home_phone: {
-                    require_from_group: "You must either fill home/work/mobile number."
-                },
-                work_phone: {
-                    require_from_group: "You must either fill home/work/mobile number."
-                },
+                FirstName: "Please enter your first name",
+                LastName: "Please enter your last tname",
+                Address: "Please enter your Address",
+                email: "Please enter your Email",
+
                 HomePhone: {
                     require_from_group: "You must either fill home/work/mobile number."
                 },
@@ -134,5 +120,5 @@
             }
         });
     });
-    
+
 </script>
