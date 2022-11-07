@@ -111,16 +111,34 @@
     }
 
 </table>
-<div class="modal1 hidden">
+@*<div class="modal1 hidden">
 
-    <img width="60" class="warning-sign" src="~/Images/Icons/warning.png" alt="">
-    <h5>Are you sure your want to delete this Customer?</h5>
-    <div>
-        <button class="delete-btn">Yes, delete!</button>
-        <button class="btn--close-modal">No, cancel</button>
+        <img width="60" class="warning-sign" src="~/Images/Icons/warning.png" alt="">
+        <h5>Are you sure your want to delete this Customer?</h5>
+        <div>
+            <button class="delete-btn">Yes, delete!</button>
+            <button class="btn--close-modal">No, cancel</button>
+        </div>
+    </div>*@
+@Html.Partial("_CustomerPartialView", new DataVerse.Models.CustomerVM());
+
+<div class="modal1 hidden" id="addCustomerModal" aria-labelledby="addCustomerLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Warning</h2>
+            </div>
+            <div class="modal-body">
+                <h2>Are you sure your want to delete this Customer?</h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger delete-btn" data-dismiss="modal">Delete</button>
+                <button type="button" class="btn btn-primary btn--close-modal" id="btnSubmit">Cancel</button>
+            </div>
+        </div>
     </div>
 </div>
-@Html.Partial("_CustomerPartialView", new DataVerse.Models.CustomerVM());
+
 
 @section scripts{
 

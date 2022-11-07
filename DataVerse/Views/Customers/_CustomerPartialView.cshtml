@@ -52,7 +52,10 @@
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 <script>
-    $(function () {       
+    $(function () {
+        jQuery.validator.addMethod("lettersonly", function (value, element) {
+            return this.optional(element) || /^[a-z0-9α-ω ]+$/i.test(value);
+        }, "Please enter letters only.");
         // Initialize form validation on the registration form.
         // It has the name attribute "registration"
         $("#addCustomerForm").validate({
@@ -65,7 +68,7 @@
                 // The key name on the left side is the name attribute
                 // of an input field. Validation rules are defined
                 // on the right side
-                FirstName: { required: true, lettersonly: true },
+                FirstName: { required: true, lettersonly: true, accept: "letters"},
                 LastName: { required: true, lettersonly: true },
                 Address: { required: true } ,
                 email: { required: true, email: true },
