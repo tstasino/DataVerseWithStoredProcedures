@@ -9,8 +9,6 @@
                 <div class="modal-header">
                     <h2 class="modal-title">Insert new Customer</h2>
                 </div>
-
-                <p id="error"></p>
                 <div class="modal-body">
                     <div class="form-errors" style="color:orangered"></div>
                     <div class="form-group">
@@ -84,19 +82,19 @@
             },
             // Specify validation error messages
             messages: {
-                FirstName: "Please enter your first name",
-                LastName: "Please enter your last tname",
-                Address: "Please enter your Address",
-                email: "Please enter your Email",
+                FirstName: "Please enter your first name. ",
+                LastName: "Please enter your last name. ",
+                Address: "Please enter your Address. ",
+                email: "Please enter your Email. ",
 
                 HomePhone: {
-                    require_from_group: "You must either fill home/work/mobile number."
+                    require_from_group: "You must either fill home/work/mobile number. "
                 },
                 WorkPhone: {
-                    require_from_group: "You must either fill home/work/mobile number."
+                    require_from_group: "You must either fill home/work/mobile number. "
                 },
                 CellPhone: {
-                    require_from_group: "You must either fill home/work/mobile number."
+                    require_from_group: "You must either fill home/work/mobile number. "
                 },
 
 
