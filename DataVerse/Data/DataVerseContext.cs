@@ -19,6 +19,6 @@ namespace DataVerse.Data
         {
         }
 
-        public System.Data.Entity.DbSet<DataVerse.Models.CustomerViewModel> CustomerViewModels { get; set; }
+        public System.Data.Entity.DbSet<DataVerse.Models.CustomerVM> CustomerViewModels { get; set; }
     }
 }

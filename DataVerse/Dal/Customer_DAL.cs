@@ -14,9 +14,9 @@ namespace DataVerse.Dal
         string conString = ConfigurationManager.ConnectionStrings["DataVerseEntities"].ToString();
 
         //Get All Customers
-        public List<CustomerViewModel> GetAllCustomers()
+        public List<CustomerVM> GetAllCustomers()
         {
-            List<CustomerViewModel> customerList = new List<CustomerViewModel>();
+            List<CustomerVM> customerList = new List<CustomerVM>();
 
             using (SqlConnection connection = new SqlConnection(conString))
             {
@@ -33,7 +33,7 @@ namespace DataVerse.Dal
                 foreach (DataRow dr in dtCustomers.Rows)
                 {
 
-                    var tmp = new CustomerViewModel();
+                    var tmp = new CustomerVM();
 
                     tmp.id = Convert.ToInt32(dr["id"]);
                     tmp.FirstName = dr["FirstName"].ToString();
@@ -54,7 +54,7 @@ namespace DataVerse.Dal
         }
 
         //Insert Customers, Phones
-        public bool InsertCustomer(CustomerViewModel customer)
+        public bool InsertCustomer(CustomerVM customer)
         {
             int id = 0;
             using (SqlConnection connection = new SqlConnection(conString))
@@ -87,9 +87,9 @@ namespace DataVerse.Dal
 
 
         //Get Customers by Id
-        public List<CustomerViewModel> GetCustomerByID(int customerId)
+        public List<CustomerVM> GetCustomerByID(int customerId)
         {
-            List<CustomerViewModel> customerList = new List<CustomerViewModel>();
+            List<CustomerVM> customerList = new List<CustomerVM>();
 
             using (SqlConnection connection = new SqlConnection(conString))
             {
@@ -107,7 +107,7 @@ namespace DataVerse.Dal
                 foreach (DataRow dr in dtCustomers.Rows)
                 {
 
-                    var tmp = new CustomerViewModel();
+                    var tmp = new CustomerVM();
 
                     tmp.id = Convert.ToInt32(dr["Id"]);
                     tmp.FirstName = dr["FirstName"].ToString();
@@ -128,7 +128,7 @@ namespace DataVerse.Dal
         }
 
         //Update Customer
-        public bool UpdateCustomer(CustomerViewModel customer)
+        public bool UpdateCustomer(CustomerVM customer)
         {
             int id = 0;
             using (SqlConnection connection = new SqlConnection(conString))

@@ -42,12 +42,12 @@ namespace DataVerse.Controllers
 
         //public ActionResult Create()
         //{
-        //    CustomerViewModel customerVm = new CustomerViewModel();
+        //    CustomerVM customerVm = new CustomerVM();
         //    return PartialView("_CustomerPartialView",customerVm);
         //}
 
         [HttpPost]
-        public ActionResult Create(CustomerViewModel customer)
+        public ActionResult Create(CustomerVM customer)
         {
             bool isInserted = false;
 
@@ -101,7 +101,7 @@ namespace DataVerse.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Edit(CustomerViewModel customer)
+        public ActionResult Edit(CustomerVM customer)
         {
             try
             {
