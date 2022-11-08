@@ -9,6 +9,9 @@ using System.Web.Mvc;
 using DataVerse;
 using DataVerse.Dal;
 using DataVerse.Models;
+using PagedList;
+
+
 
 
 
@@ -26,7 +29,7 @@ namespace DataVerse.Controllers
         //Customer_DAL _customerDAL = new Customer_DAL();
 
         // GET: Customers
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             var customerList = customer_DAL.GetAllCustomers();
             if(customerList.Count  == 0)
@@ -34,7 +37,7 @@ namespace DataVerse.Controllers
                 TempData["InfoMessage"] = "Currently there are no Customers in the Database";
             }
             //var customers = db.Customers.Include(c => c.Phone);
-            return View(customerList);
+            return View(customerList.ToPagedList(page ?? 1, 6));
         }
 
 

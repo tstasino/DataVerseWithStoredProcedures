@@ -1,4 +1,7 @@
-﻿@model IEnumerable<DataVerse.Models.CustomerVM>
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<DataVerse.Models.CustomerVM>
+@*@model IEnumerable<DataVerse.Models.CustomerVM>*@
 @{
     ViewBag.Title = "Index";
 }
@@ -42,29 +45,37 @@
 <table class="table table-bordered">
     <tr class="btn-primary">
         <th>
-            @Html.DisplayNameFor(model => model.id)
+            @*@Html.DisplayNameFor(model => model.id)*@
+            ID
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
+            @*@Html.DisplayNameFor(model => model.FirstName)*@
+            First Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastName)
+            @*@Html.DisplayNameFor(model => model.LastName)*@
+            Last Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Address)
+            @*@Html.DisplayNameFor(model => model.Address)*@
+            Address
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.email)
+            @*@Html.DisplayNameFor(model => model.email)*@
+            Email
         </th>
 
         <th>
-            @Html.DisplayNameFor(model => model.HomePhone)
+            @*@Html.DisplayNameFor(model => model.HomePhone)*@
+            Home Phone
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.WorkPhone)
+            @*@Html.DisplayNameFor(model => model.WorkPhone)*@
+            Work Phone
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CellPhone)
+            @*@Html.DisplayNameFor(model => model.CellPhone)*@
+            Cell Phone
         </th>
         <th></th>
     </tr>
@@ -109,8 +120,10 @@
             </td>
         </tr>
     }
-
 </table>
+<div class="pagination" >
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+</div>
 @*<div class="modal1 hidden">
 
         <img width="60" class="warning-sign" src="~/Images/Icons/warning.png" alt="">
@@ -126,7 +139,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">Warning</h2>
+                <h4 class="modal-title">Warning</h4>
             </div>
             <div class="modal-body">
                 <h2>Are you sure your want to delete this Customer?</h2>
