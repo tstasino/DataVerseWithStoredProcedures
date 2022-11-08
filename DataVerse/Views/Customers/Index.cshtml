@@ -101,7 +101,7 @@
                 @*@Html.ActionLink("Edit", "Edit", new { id = item.id }) |*@
                 @* @Html.ActionLink("Details", "Details", new { id = item.id }) |*@
                 @*@Html.ActionLink("Delete", "Delete", new { id = item.id })*@
-                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="@("#editCustomerModal-" + item.id)" data-url="@Url.Action($"Edit/{item.id}")">
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="@("#editCustomerModal-" + item.id)" @*data-url="@Url.Action($"Edit/{item.id}")"*@>
                     Edit
                 </button>
                 @Html.Partial("_editCustomerPartialView", item)

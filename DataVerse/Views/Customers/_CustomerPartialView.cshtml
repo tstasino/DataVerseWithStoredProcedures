@@ -68,19 +68,22 @@
                 // The key name on the left side is the name attribute
                 // of an input field. Validation rules are defined
                 // on the right side
-                FirstName: { required: true, lettersonly: true, accept: "letters"},
+                FirstName: { required: true, lettersonly: true },
                 LastName: { required: true, lettersonly: true },
                 Address: { required: true } ,
                 email: { required: true, email: true },
 
                 HomePhone: {
-                    require_from_group: [1, ".phonegroup"]
+                    require_from_group: [1, ".phonegroup"],
+                    pattern: /[0-9]{10}/
                 },
                 WorkPhone: {
-                    require_from_group: [1, ".phonegroup"]
+                    require_from_group: [1, ".phonegroup"],
+                    pattern: /[0-9]{10}/
                 },
                 CellPhone: {
-                    require_from_group: [1, ".phonegroup"]
+                    require_from_group: [1, ".phonegroup"],
+                    pattern: /[0-9]{10}/
                 }
             },
             // Specify validation error messages
@@ -99,8 +102,6 @@
                 CellPhone: {
                     require_from_group: "You must either fill home/work/mobile number. "
                 },
-
-
 
             },
             invalidHandler: function (e, validator) {

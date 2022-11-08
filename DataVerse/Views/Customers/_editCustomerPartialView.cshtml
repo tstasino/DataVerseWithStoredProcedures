@@ -8,7 +8,7 @@
                 <div class="modal-header">
                     <h2 class="modal-title">Edit Customer</h2>
                 </div>
-    
+
                 <div class="modal-body">
                     <div class="form-errors" style="color:orangered"></div>
                     @Html.HiddenFor(m => m.id)
@@ -44,7 +44,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="btnSubmit">Save</button>
+                    <button type="submit" value="validate" class="btn btn-primary" id="btnSubmit">Save</button>
                 </div>
             </form>
         </div>
@@ -53,19 +53,18 @@
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
 <script>
-    $(function () {
-        $.validator.addMethod(
-            "regex",
-            function (value, element, regexp) {
-                var re = new RegExp(regexp);
-                return this.optional(element) || re.test(value);
-            },
-            "Please check your input."
-        );
+    //$(function () {
+    $(document).ready(function () {
+
+        jQuery.validator.addMethod("lettersonly", function (value, element) {
+            return this.optional(element) || /^[a-z0-9α-ω ]+$/i.test(value);
+        }, "Please enter letters only.");
         // Initialize form validation on the registration form.
         // It has the name attribute "registration"
         $("#editCustomerForm").validate({
+
             errorLabelContainer: ".form-errors",
             groups: {
                 phone: "HomePhone WorkPhone CellPhone"
@@ -75,19 +74,22 @@
                 // The key name on the left side is the name attribute
                 // of an input field. Validation rules are defined
                 // on the right side
-                FirstName: { required: true, lettersonly: true, accept: "letters"},
+                FirstName: { required: true, lettersonly: true },
                 LastName: { required: true, lettersonly: true },
-                Address: { required: true } ,
+                Address: { required: true },
                 email: { required: true, email: true },
 
                 HomePhone: {
-                    require_from_group: [1, ".phonegroup"]
+                    require_from_group: [1, ".phonegroup"],
+                    pattern: /[0-9]{10}/
                 },
                 WorkPhone: {
-                    require_from_group: [1, ".phonegroup"]
+                    require_from_group: [1, ".phonegroup"],
+                    pattern: /[0-9]{10}/
                 },
                 CellPhone: {
-                    require_from_group: [1, ".phonegroup"]
+                    require_from_group: [1, ".phonegroup"],
+                    pattern: /[0-9]{10}/
                 }
             },
             // Specify validation error messages
@@ -107,8 +109,6 @@
                     require_from_group: "You must either fill home/work/mobile number. "
                 },
 
-
-
             },
             invalidHandler: function (e, validator) {
                 //validator.errorList contains an array of objects, where each object has properties "element" and "message".  element is the actual HTML Input.
@@ -127,7 +127,8 @@
                 form.submit();
             }
         });
+        
+        $("#editCustomerForm").validato();
     });
 
 </script>
-

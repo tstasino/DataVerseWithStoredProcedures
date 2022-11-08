@@ -55,6 +55,13 @@ namespace DataVerse.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if (customer.FirstName.Trim() == null) throw new Exception("Customer was not Inserted. Fist Name cannot be null");
+                    if (customer.LastName.Trim() == null) throw new Exception("Customer was not Inserted. Last Name cannot be null");
+                    if (customer.Address.Trim() == null) throw new Exception("Customer was not Inserted. Address cannot be null");
+                    if (customer.email.Trim() == null) throw new Exception("Customer was not Inserted. Email cannot be null");
+                    if (customer.HomePhone == null && customer.WorkPhone == null && customer.CellPhone == null)
+                        throw new Exception("Customer was not Inserted. One of the three Phones must not be null");
+
                     isInserted = customer_DAL.InsertCustomer(customer);
 
                     if (isInserted)
@@ -107,6 +114,13 @@ namespace DataVerse.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if (customer.FirstName.Trim() == null) throw new Exception("Customer was not updated. Fist Name cannot be null");
+                    if (customer.LastName.Trim() == null) throw new Exception("Customer was not updated. Last Name cannot be null");
+                    if (customer.Address.Trim() == null) throw new Exception("Customer was not updated. Address cannot be null");
+                    if (customer.email.Trim() == null) throw new Exception("Customer was not updated. Email cannot be null");
+                    if (customer.HomePhone == null && customer.WorkPhone == null && customer.CellPhone == null)
+                        throw new Exception("Customer was not Updated. One of the three Phones must not be null");
+
                     bool isUpdated = customer_DAL.UpdateCustomer(customer);
 
                     if (isUpdated)
@@ -125,7 +139,7 @@ namespace DataVerse.Controllers
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = ex.Message;
-                return View("Index");
+                return RedirectToAction("Index");
                 throw;
             }
         }
@@ -174,7 +188,7 @@ namespace DataVerse.Controllers
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = ex.Message;
-                return View("Index");
+                return RedirectToAction("Index");
                 
             }
         }
